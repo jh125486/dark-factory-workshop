@@ -11,7 +11,8 @@ file and writes HTML to stdout.
 
 First, open a PR with spec/target.html: one short sentence, each word a
 span styled by its meaning, a comment explaining the mapping, no JS or
-external files. Give me its path; merging it is my approval.
+external files. Give me its path and wait for my merge; merging it is my
+approval.
 
 Then build the renderer until its output for that sentence makes the
 same relative styling choices as the target (not byte-equal). Score text

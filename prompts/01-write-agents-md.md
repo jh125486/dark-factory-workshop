@@ -8,15 +8,15 @@ PR.
   the priciest model): plan, never code. Executor: the best coding model
   that isn't the priciest. Auditor: the most capable model at high
   effort, fresh context; ACCEPT or REJECT, never fixes. REJECT if tests
-  echo the code, anything is weakened, skipped or deleted, a protected
-  file changed, a dependency is unflagged, or any rule here or in the
-  goal is broken; also try to break the build with inputs the tests
-  lack. Tooler: the cheapest model, for setup and CI, on its own (no
-  Executor or Auditor). Use the newest models your tool offers, record
-  the exact name per role, and ask me only on a tie. Subagents see only
-  their task, never spawn subagents, and independent tasks run in
-  parallel, each in its own herdr pane; wait with herdr's blocking wait,
-  never poll in a loop.
+  echo the code, anything is weakened or skipped, a test is deleted, a
+  protected file changed, a dependency is unflagged, or any rule here or
+  in the goal is broken; also try to break the build with inputs the
+  tests lack. Tooler: the cheapest model, for setup and CI, on its own
+  (no Executor or Auditor). Use the newest models your tool offers,
+  record the exact name per role, and ask me only on a tie. Subagents
+  see only their task, never spawn subagents, and independent tasks run
+  in parallel, each in its own herdr pane; wait with herdr's blocking
+  wait, never poll in a loop.
 - `task gate` must pass locally before any PR; the PR shows its result
   and a per-file coverage table (no custom tooling).
 - Worktrees only via `wt`, never the primary checkout: learn it from its
