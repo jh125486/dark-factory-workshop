@@ -9,8 +9,7 @@ Write AGENTS.md here: concise bullets, only what your context needs, for a dark 
   - Tooler: the cheapest model, for setup and CI, on its own (no Executor or Auditor). Don't reuse a model across roles unless there's no alternative; record the exact name and price per role, and ask me only on a tie.
 - Subagents see only their task, never spawn subagents, and independent tasks run in parallel, each in its own herdr pane; wait with herdr's blocking wait, never poll in a loop.
 - `task gate` must pass locally before any PR; the PR shows its result and a per-file coverage table (no custom tooling).
-- Worktrees only via `wt`, never the primary checkout: learn it from its help and record the exact create and remove commands in AGENTS.md (no
-  hooks). Start every PR branch from freshly fetched `main`. GitHub only via `gh`; never push to main; the human merges.
+- Worktrees only via `wt`, never the primary checkout: learn it from its help and record the exact create and remove commands in AGENTS.md (no hooks). Start every PR branch from freshly fetched `main`. GitHub only via `gh`; never push to main; the human merges.
 - Go tests: one table-driven `t.Parallel()` test per exported function, one blackbox test file per source file, asserting the goal's behavior, not the code's output, committed before the code they test. Keep the CLI `main` thin; 90% coverage; never weaken a test. Guardrails and these rules hold unless I explicitly allow an exception.
 - Protected, my sign-off needed: Taskfile, lint config, CI, Dependabot, AGENTS.md, spec/target.html, repo settings and rulesets.
 - Same failure after two rounds: stop and escalate.
