@@ -61,6 +61,14 @@ Step 3 is separate for two reasons. It is the safety step, since the ruleset is 
 
 ## 1 Set up your LLM with rules
 
+### Pick your orchestrator
+
+The model you launch is the orchestrator/Planner. It turns your goal into tasks, delegates the coding and tracks the results. Look for strong planning and instruction following, reliable use of tools and subagents, and enough context to keep the rules, plan and task results in view through a long session.
+
+For this workshop, start with one of your tool's newest strong reasoning models below its priciest tier, with high reasoning effort if available. Balance quality against cost, usage limits and waiting time, since this model runs the whole loop. The orchestrator plans and delegates; Executors write code. Step 1 assigns the best coding model below the priciest tier to Executor, the most capable model at high effort in fresh context to Auditor, and the cheapest to Tooler.
+
+Use Step 1's output as your first check: does it preserve the rules and delegate a fresh-context audit without repeated reminders? If you only have one model, use it for all roles and skip the tier split; keep each Executor and Auditor in its own context.
+
 Keep your tool running in its herdr pane for the rest of the workshop; open a second pane when you want to run a command yourself or watch a subagent.
 
 **Give it this one prompt:** [`prompts/01-write-agents-md.md`](prompts/01-write-agents-md.md)
