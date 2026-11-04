@@ -38,11 +38,11 @@ Only step 4 is the dark factory. The steps before it are one-time setup, and ste
 |------|------|-----------|
 | 1 | **LLM setup**: the AI writes its own rules (`AGENTS.md`) | once per project, reused by every later run |
 | 2 | **Repo setup**: the gate (Taskfile, lint, CI) and its protected files | once per repo |
-| 3 | **Lock**: a ruleset makes the gate unbypassable | once per repo, kept separate on purpose (see below) |
+| 3 | **Lock**: a ruleset requires the gate on every merge | once per repo, kept separate on purpose (see below) |
 | 4 | **The dark factory**: goal in, reviewed PR out | every feature; this is what you would keep doing |
 | 5 | **Stretch goal**: another factory run (optimize), time permitting | a normal factory task; only optional here because of the clock |
 
-Step 3 is separate for two reasons. It is the safety step, since the ruleset is what stops the agent from pushing to `main` or merging past a red check. And it has to wait: the `guardrails` check it requires doesn't exist until PR #1's CI has run, and a ruleset in place earlier would block PR #1 itself.
+Step 3 is separate for two reasons. It is the safety step, since the ruleset is what stops the agent from pushing to `main` or merging past a red check. It isn't a hard boundary: the workshop token can still edit rulesets, so `AGENTS.md` protects repo settings and rulesets and the Auditor rejects any change to them. And it has to wait: the `guardrails` check it requires doesn't exist until PR #1's CI has run, and a ruleset in place earlier would block PR #1 itself.
 
 ## Pre-work
 
@@ -50,7 +50,7 @@ Step 3 is separate for two reasons. It is the safety step, since the ruleset is 
 - Install [herdr](https://herdr.dev), a terminal multiplexer for agents (`brew install herdr` on macOS, `curl -fsSL https://herdr.dev/install.sh | sh` on Linux and WSL2). You will run your AI tool inside it for the whole workshop.
 - Install [worktrunk](https://worktrunk.dev) (`wt`), which the AI uses for every worktree: `brew install worktrunk` (macOS and Linux) or `cargo install worktrunk`. The AI reads `wt --help` itself, so you don't need to learn it.
 - Install your AI coding tool (any tool works if it can run subagents and run in a terminal) and launch it on one of its strongest models (not necessarily the single most expensive one); the orchestrator is the Planner and runs the whole loop. The AI picks the models for the other roles from your tool's model list and records them in `AGENTS.md`. You need a plan with room for a long agent session (one measured run of steps 1 to 5 under Codex on a Plus plan used roughly half of a 5-hour usage window). If your tool asks whether to trust hooks, decline: the workshop doesn't need any. If you only have one model, run everything on it and skip the tier split.
-- Install the [GitHub CLI](https://cli.github.com) (`gh`, version 2.99.0 or newer; `gh --version`; older versions lack `--attach`, which step 4 uses to attach screenshots if you install Playwright). Create a classic token with the `repo` and `workflow` scopes and a 1-day expiry, and export it as `GH_TOKEN` in the shell you launch your tool from (skip `gh auth login`, so the short-lived token is the only credential). Run `gh auth setup-git` so `git push` uses that token too. Check it with `gh api user --jq .login`, then check the rest: `go version && cc --version && herdr --version && wt --version && git config user.email`.
+- Install the [GitHub CLI](https://cli.github.com) (`gh`, version 2.99.0 or newer; `gh --version`; older versions lack `--attach`, which step 4 uses to attach screenshots if you install Playwright). Create a classic token with the `repo` and `workflow` scopes and a 1-day expiry, and export it as `GH_TOKEN` in the shell you launch your tool from (skip `gh auth login`, so the short-lived token is the only credential). Run `gh auth setup-git` so `git push` uses that token too (this changes your global git credential helper for GitHub; the wrap-up says how to undo it). Check it with `gh api user --jq .login`, then check the rest: `go version && cc --version && herdr --version && wt --version && git config user.email`.
 - Your terminal can already `git push` feature branches (a token credential needs the `workflow` scope because PR #1 adds `.github/workflows`; or use SSH), and git has `user.name` and `user.email`.
 - Install the latest Go 1.27.x, git and a C compiler (`build-essential` on Ubuntu/WSL2, where the race detector needs one; Xcode command line tools on macOS). The AI installs the rest. (The agent can't type a sudo password, so install these yourself.) Make sure `$(go env GOPATH)/bin` and `~/.local/bin` are on your `PATH`.
 - Warm the caches so the room doesn't all download at once: run `go run github.com/golangci/golangci-lint/v2/cmd/golangci-lint@latest version`, `go run honnef.co/go/tools/cmd/staticcheck@latest -version` and `go run golang.org/x/vuln/cmd/govulncheck@latest -version`.
@@ -121,6 +121,7 @@ The numbers below are illustrative (one presenter's run on Apple-silicon hardwar
 ## Wrap-up
 
 - Revoke the GitHub token (and any other token you created for this workshop).
+- Undo `gh auth setup-git` if you ran it only for the workshop: `git config --global --remove-section credential.https://github.com` and `git config --global --remove-section credential.https://gist.github.com` (skip this if `gh` was already your credential helper).
 - Undo the worktrunk `worktree-path` setting the AI added (`wt config show` shows where).
 - The PR is the deliverable, not the transcript.
 

@@ -29,7 +29,7 @@ PR.
   CLI `main` thin; 90% coverage; never weaken a test. Guardrails and
   these rules hold unless I explicitly allow an exception.
 - Protected, my sign-off needed: Taskfile, lint config, CI, Dependabot,
-  AGENTS.md, spec/target.html.
+  AGENTS.md, spec/target.html, repo settings and rulesets.
 - Same failure after two rounds: stop and escalate.
 - If your tool reads another instructions filename, symlink it to
   AGENTS.md (a copy if symlinks fail).
