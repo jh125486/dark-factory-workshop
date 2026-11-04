@@ -67,6 +67,16 @@ The model you launch is the orchestrator/Planner. It turns your goal into tasks,
 
 For this workshop, start with one of your tool's newest strong reasoning models below its priciest tier, with high reasoning effort if available. Balance quality against cost, usage limits and waiting time, since this model runs the whole loop. The orchestrator plans and delegates; Executors write code. Step 1 assigns the best coding model below the priciest tier to Executor, the most capable model at high effort in fresh context to Auditor, and the cheapest to Tooler.
 
+Example Planner choices, checked November 4, 2026:
+
+| Tool | Example model | How to select it |
+|---|---|---|
+| Codex CLI | [GPT-6.1 Sol](https://learn.chatgpt.com/docs/models?surface=cli) | `codex -m gpt-6.1-sol`, then [`/model`](https://learn.chatgpt.com/docs/codex/cli) to choose high reasoning effort. |
+| Claude Code | [Claude Sonnet 5.5](https://support.claude.com/en/articles/11940350-claude-code-model-configuration) | `claude --model claude-sonnet-5-5 --effort high` ([effort settings](https://code.claude.com/docs/en/model-config#adjust-effort-level)). |
+| GitHub Copilot CLI | [Claude Sonnet 5.5](https://github.blog/changelog/2026-09-28-claude-sonnet-5-5-in-github-copilot/) | Run [`/model`](https://docs.github.com/en/copilot/how-tos/copilot-cli/use-copilot-cli/choose-a-model), select Claude Sonnet 5.5 and choose high reasoning where offered. |
+
+Availability, model IDs and effort controls vary by plan, provider, CLI version and organization settings. Check your tool's model picker; if an example is unavailable, apply the criteria above to the models you have.
+
 Use Step 1's output as your first check: does it preserve the rules and delegate a fresh-context audit without repeated reminders? If you only have one model, use it for all roles and skip the tier split; keep each Executor and Auditor in its own context.
 
 Keep your tool running in its herdr pane for the rest of the workshop; open a second pane when you want to run a command yourself or watch a subagent.
